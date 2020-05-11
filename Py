@@ -1,5 +1,5 @@
-import emojis
-emojis
+import emoji
+emoji
 import validators
 validators
 
@@ -54,12 +54,10 @@ def verContacts():
         print(llave + "" + numero)
 
 def CallContact():
-    palabra_shift = []
     nombre_contact = input("Ingrese el nombre del contacto que desea llamar:\n")
     existe = nombre_contact in contacts
     if existe:
-        encode = {"0": ":telephone_receiver:"}
-        print(f"Llamanado a {nombre_contact}")
+        print(f"Llamanado a {nombre_contact}", emoji.emojize(":telephone_receiver:"))
     else:
         print("El contacto no existe, intentelo de nuevo. \n")
 
@@ -67,17 +65,24 @@ def MsgContact():
     nombre_contact = input("Ingrese el contacto al que desea enviar un mensaje de texto: ")
     existe = nombre_contact in contacts
     if existe:
-        msg = input(f"Ingrese el mensaj de tecto que desea enviar al {contacts[nombre_contact]}: \n")
-        print("MENSAJE DE TEXTO ENVIADO!")
+        msg = input(f"Ingrese el mensaje de texto que desea enviar al {contacts[nombre_contact]}: \n")
+        print("MENSAJE DE TEXTO ENVIADO!", emoji.emojize(":beginner:"))
     else:
         print("El contacto no existe, intentelo de nuevo!")
+
+def mailContact():
+    nombre_contact = input("Ingrese el contacto al que desea enviar un mensaje de texto: ")
+    existe = nombre_contact in contacts
+    if existe:
+        mail = input(f"Ingrese el mail que desea enviar a: \n")
+        print("EMAIL ENVIADO DE FORMA EXITOSA!", emoji.emojize(":email:"))
 
 
 while not exit:
     print("_____________________")
     print("    CONTACTS MENU    ")
     print("---------------------")
-    menu = int(input(" 1. Crear Contacto\n 2. Editar Contacto \n 3. Buscar Contacto \n 4. Listar Contactos \n 5. Eliminar Contacto \n 6. Llamar Contacto \n 7. Enviar Mensaje a Contacto \n 8. Enviar Correo a Contacto \n 10. Exportar Contactos \n 11. Salir\n Ingrese la opcion que desea ejecutar:"))
+    menu = int(input(" 1. Crear Contacto\n 2. Editar Contacto \n 3. Buscar Contacto \n 4. Listar Contactos \n 5. Eliminar Contacto \n 6. Llamar Contacto \n 7. Enviar Mensaje a Contacto \n 8. Enviar Correo a Contacto \n 10.Exportar Contactos \n 11.Salir\n Ingrese la opcion que desea ejecutar:"))
     if menu == 1:
         crearContacto()
     if menu == 2:
@@ -92,6 +97,8 @@ while not exit:
         CallContact()
     if menu == 7:
         MsgContact()
-    elif menu == 7:
+    if menu == 8:
+        mailContact()
+    elif menu == 9:
         exit = True
 
