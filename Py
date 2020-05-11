@@ -1,0 +1,58 @@
+
+contacts = {}
+contacts_informacion = {}
+exit = False
+def crearContacto():
+    nombre_contact =input("Ingrese el nombre del nuevo contacto:\n")
+    celular_contact = input("Ingrese nuevo numero telefonoico del contacto ya existente:\n")
+    contacts[nombre_contact] = celular_contact
+    print("\n")
+
+def editarContacto():
+    nombre_contact = input("Ingrese el nombre del nuevo contacto:\n")
+    celular_contact = input("Ingrese nuevo numero telefonoico del contacto:\n")
+    existe = nombre_contact in contacts
+    if existe:
+        contacts[nombre_contact] = celular_contact
+    else:
+        print("El contacto no existe, intentelo de nuevo. \n")
+
+def buscarContacto():
+    nombre_contact = input("Ingrese el nombre del contacto que desea buscar:\n")
+    existe = nombre_contact in contacts
+    if existe:
+        print(nombre_contact + "" + contacts[nombre_contact])
+    else:
+        print("El contacto no existe, intentelo de nuevo. \n")
+
+def eliminarContact():
+    nombre_contact = input("Ingrese el nombre del contacto que desea eliminar:\n")
+    existe = nombre_contact in contacts
+    if existe:
+        del contacts[nombre_contact]
+        print("Contacto eliminado correctamente \n")
+    else:
+        print("El contacto no existe, intentelo de nuevo. \n")
+
+def verContacts():
+    #for lista in contacts:
+        #print(lista + "" + contacts[lista])
+
+    for llave, valor in contacts.items():
+        print(llave + "" + valor)
+
+while not exit:
+    print("CONTACTS MENU")
+    menu = int(input(" 1.Crear contacto\n 2.Editar contacto \n 3. Buscar contacto \n 4. Eliminar contacto \n 5. Ver contactos \n 6. Salir\n Ingrese la opcion que desea ejecutar:"))
+    if menu == 1:
+        crearContacto()
+    if menu == 2:
+        editarContacto()
+    if menu == 3:
+        buscarContacto()
+    if menu== 4:
+        eliminarContact()
+    if menu== 5:
+        verContacts()
+    elif menu == 6:
+        exit = True
