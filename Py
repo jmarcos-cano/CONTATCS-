@@ -1,18 +1,33 @@
+import emojis
+emojis
+import validators
+validators
 
 contacts = {}
-contacts_informacion = {}
+
 exit = False
 def crearContacto():
     nombre_contact =input("Ingrese el nombre del nuevo contacto:\n")
-    celular_contact = input("Ingrese nuevo numero telefonoico del contacto ya existente:\n")
-    contacts[nombre_contact] = celular_contact
+    celular_contact = input("Ingrese el numero telefonoico del contacto:\n")
+    correo_contact = input("Ingrese la direccion del correo electronico del contacto:\n")
+    resultemail = validators.email(correo_contact)
+    if resultemail == True:
+        print("Contacto creado EXITOSAMENTE!")
+        contacts[nombre_contact] = celular_contact
+    else:
+        print("Correo no valido. Intente de nuevo!")
     print("\n")
 
 def editarContacto():
-    nombre_contact = input("Ingrese el nombre del nuevo contacto:\n")
-    celular_contact = input("Ingrese nuevo numero telefonoico del contacto:\n")
+    nombre_contact = input("Ingrese el nombre del contacto que desea editar:\n")
     existe = nombre_contact in contacts
     if existe:
+        editOptions = int(input(" 1.Editar Numero Telefonico \n 2.Editar Correo Electronico \n"))
+        print(f"Ingrese lo que desea editar del contacto guardado como {nombre_contact}:")
+        if editOptions == 1:
+            celular_contact = input("Ingrese el numero telefonoico del contacto:\n")
+        if editOptions == 2:
+            correo_contact = input("Ingrese la direccion del correo electronico del contacto a añadir:\n")
         contacts[nombre_contact] = celular_contact
     else:
         print("El contacto no existe, intentelo de nuevo. \n")
@@ -35,15 +50,34 @@ def eliminarContact():
         print("El contacto no existe, intentelo de nuevo. \n")
 
 def verContacts():
-    #for lista in contacts:
-        #print(lista + "" + contacts[lista])
+    for llave, numero in contacts.items():
+        print(llave + "" + numero)
 
-    for llave, valor in contacts.items():
-        print(llave + "" + valor)
+def CallContact():
+    palabra_shift = []
+    nombre_contact = input("Ingrese el nombre del contacto que desea llamar:\n")
+    existe = nombre_contact in contacts
+    if existe:
+        encode = {"0": ":telephone_receiver:"}
+        print(f"Llamanado a {nombre_contact}")
+    else:
+        print("El contacto no existe, intentelo de nuevo. \n")
+
+def MsgContact():
+    nombre_contact = input("Ingrese el contacto al que desea enviar un mensaje de texto: ")
+    existe = nombre_contact in contacts
+    if existe:
+        msg = input(f"Ingrese el mensaj de tecto que desea enviar al {contacts[nombre_contact]}: \n")
+        print("MENSAJE DE TEXTO ENVIADO!")
+    else:
+        print("El contacto no existe, intentelo de nuevo!")
+
 
 while not exit:
-    print("CONTACTS MENU")
-    menu = int(input(" 1.Crear contacto\n 2.Editar contacto \n 3. Buscar contacto \n 4. Eliminar contacto \n 5. Ver contactos \n 6. Salir\n Ingrese la opcion que desea ejecutar:"))
+    print("_____________________")
+    print("    CONTACTS MENU    ")
+    print("---------------------")
+    menu = int(input(" 1. Crear Contacto\n 2. Editar Contacto \n 3. Buscar Contacto \n 4. Listar Contactos \n 5. Eliminar Contacto \n 6. Llamar Contacto \n 7. Enviar Mensaje a Contacto \n 8. Enviar Correo a Contacto \n 10. Exportar Contactos \n 11. Salir\n Ingrese la opcion que desea ejecutar:"))
     if menu == 1:
         crearContacto()
     if menu == 2:
@@ -51,8 +85,13 @@ while not exit:
     if menu == 3:
         buscarContacto()
     if menu== 4:
-        eliminarContact()
-    if menu== 5:
         verContacts()
-    elif menu == 6:
+    if menu== 5:
+        eliminarContact()
+    if menu== 6:
+        CallContact()
+    if menu == 7:
+        MsgContact()
+    elif menu == 7:
         exit = True
+
