@@ -732,7 +732,8 @@ def crearContacto():
     nombre_contact =input("Ingrese el nombre del nuevo contacto:\n")
     celular_contact = input("Ingrese el numero telefonoico del contacto:\n")
     correo_contact = input("Ingrese la direccion del correo electronico del contacto:\n")
-    company_contact = input("Ingrese el nombre de la compañia del usuario:")
+    company_contact = input("Ingrese el nombre de la compañia del usuario:\n")
+    extra_contact = input("Ingrese alguna informacion extra del contacto:\n")
     resultemail = validators.email(correo_contact)
     if resultemail == True:
       contact={}
@@ -748,16 +749,23 @@ def crearContacto():
 
 def editarContacto():
     nombre_contact = input("Ingrese el nombre del contacto que desea editar:\n")
-    existe = nombre_contact in contacts
-    if existe:
+    existe = False 
+    contact = {}
+    nombre = ""
+    for letra in contacts:
+      for contacto in contacts[letra].keys():
+        if nombre_contact in contacto: 
+          nombre = contacto
+          contact = contacts[letra][contacto] 
+          existe = True 
         editOptions = int(input(" 1.Editar Numero Telefonico \n 2.Editar Correo Electronico \n"))
         print(f"Ingrese lo que desea editar del contacto guardado como {nombre_contact}:")
         if editOptions == 1:
             celular_contact = input("Ingrese el numero telefonoico del contacto:\n")
+            return 
         if editOptions == 2:
             correo_contact = input("Ingrese la direccion del correo electronico del contacto a añadir:\n")
-        contacts[nombre_contact] = celular_contact
-
+            return 
     else:
         print("El contacto no existe, intentelo de nuevo. \n")
 
