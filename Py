@@ -3,20 +3,32 @@ emoji
 import validators
 validators
 
-contacts = {}
-list_contacts = []
+contacts = {
+  "K": {
+      "Karina Cervantes": {
+        "telefono": "+502 (805) 502-3648",
+        "email": "karinacervantes@navir.com",
+        "company": "NAVIR",
+        "extra": "Lo conoci en , NAVIR No recuerdo exactamente cuando, 2 mensajes no le\u00eddos"
+      }
+    }
+ 
+}
 exit = False
 def crearContacto():
     nombre_contact =input("Ingrese el nombre del nuevo contacto:\n")
     celular_contact = input("Ingrese el numero telefonoico del contacto:\n")
     correo_contact = input("Ingrese la direccion del correo electronico del contacto:\n")
+    company_contact = input("Ingrese el nombre de la compañia del usuario:")
     resultemail = validators.email(correo_contact)
     if resultemail == True:
-        print("Contacto creado EXITOSAMENTE!")
-        list_contacts.append(celular_contact)
-        list_contacts.append(correo_contact)
-        contacts[nombre_contact] = list_contacts
-        print(contacts)
+      contact={}
+      data_contact = {}
+      data_contact["telefono"]=celular_contact
+      data_contact["email"]=correo_contact 
+      data_contact["company"] = company_contact 
+      print("Contacto creado EXITOSAMENTE!")
+      contacts[nombre_contact[0:1]][nombre_contact]=data_contact
     else:
         print("Correo no valido. Intente de nuevo!")
     print("\n")
@@ -38,11 +50,19 @@ def editarContacto():
 
 def buscarContacto():
     nombre_contact = input("Ingrese el nombre del contacto que desea buscar:\n")
-    existe = nombre_contact in contacts
-    if existe:
-        print(nombre_contact + "" + contacts[nombre_contact])
+    existe = False 
+    contact = {}
+    nombre = ""
+    for letra in contacts:
+      for contacto in contacts[letra].keys():
+        if nombre_contact in contacto: 
+          nombre = contacto
+          contact = contacts[letra][contacto] 
+          existe = True  
+    if existe == True:
+      print(f"Nombre: {nombre}\nTelefono: {contact['telefono']}\nDireccion de correo: {contact['email']}")
     else:
-        print("El contacto no existe, intentelo de nuevo. \n")
+      print("El contacto no existe, intentelo de nuevo. \n")
 
 def eliminarContact():
     nombre_contact = input("Ingrese el nombre del contacto que desea eliminar:\n")
@@ -54,16 +74,31 @@ def eliminarContact():
         print("El contacto no existe, intentelo de nuevo. \n")
 
 def verContacts():
-    for llave, valor in range(contacts.items()):
-        print(llave + "" + valor)
+  lista_llaves = list(contacts.keys())
+  lista_llaves.sort()
+  print("-------CONTACTOS-------")
+  for letra in lista_llaves:
+    contador = 1
+    print("- "+letra)
+    for contacto in contacts[letra].keys():
+      print(f"\t {contador}. {contacto}")
+      contador = contador + 1
+  print("-----------------------")
+      
 
 def CallContact():
     nombre_contact = input("Ingrese el nombre del contacto que desea llamar:\n")
-    existe = nombre_contact in contacts
-    if existe:
-        print(f"Llamanado a {nombre_contact}", emoji.emojize(":telephone_receiver:"))
+    existe = False 
+    contact = {}
+    for letra in contacts:
+      for contacto in contacts[letra].keys():
+        if nombre_contact == contacto:
+          contact = contacts[letra][contacto] 
+          existe = True  
+    if existe == True:
+      print(f"Llamanado a {nombre_contact} al numero de telefono {contact['telefono']}", emoji.emojize(":telephone_receiver:"))
     else:
-        print("El contacto no existe, intentelo de nuevo. \n")
+      print("El contacto no existe, intentelo de nuevo. \n")
 
 def MsgContact():
     nombre_contact = input("Ingrese el contacto al que desea enviar un mensaje de texto: ")
@@ -80,6 +115,11 @@ def mailContact():
     if existe:
         mail = input(f"Ingrese el mail que desea enviar a: \n")
         print("EMAIL ENVIADO DE FORMA EXITOSA!", emoji.emojize(":email:"))
+
+
+
+
+
 
 
 while not exit:
