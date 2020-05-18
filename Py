@@ -750,22 +750,34 @@ def crearContacto():
 def editarContacto():
     nombre_contact = input("Ingrese el nombre del contacto que desea editar:\n")
     existe = False 
-    contact = {}
     nombre = ""
     for letra in contacts:
       for contacto in contacts[letra].keys():
-        if nombre_contact in contacto: 
-          nombre = contacto
-          contact = contacts[letra][contacto] 
+        if nombre_contact in contacto:
+          letter = letra
+          nombre = contacto 
           existe = True 
-        editOptions = int(input(" 1.Editar Numero Telefonico \n 2.Editar Correo Electronico \n"))
-        print(f"Ingrese lo que desea editar del contacto guardado como {nombre_contact}:")
-        if editOptions == 1:
-            celular_contact = input("Ingrese el numero telefonoico del contacto:\n")
-            return 
-        if editOptions == 2:
-            correo_contact = input("Ingrese la direccion del correo electronico del contacto a añadir:\n")
-            return 
+    if existe == True: 
+      try:
+        edit_numero = int(input("Ingrese el nuevo numero del telefono:\n"))
+   
+      except ValueError:
+        print("Numero ingresado es INVALIDO!")
+        return 
+      edit_email = input("Ingrese el nuevo email del contacto\n")
+      resultemail_edit = validators.email(edit_email)
+      if resultemail_edit == True:
+        print(contacts[letra][contacto]["email"])
+        #contacts[letra][contacto]["email"] = edit_email 
+        contacts[letra][contacto].update(
+          {
+            "email":edit_email
+          }
+        )
+        contacts[letra][contacto]["telefono"] = edit_numero 
+        print( contacts[letra][contacto]["email"] ) 
+        print( contacts[letra][contacto]) 
+        print("Contacto editado CORRECTAMENTE!")
     else:
         print("El contacto no existe, intentelo de nuevo. \n")
 
@@ -787,12 +799,22 @@ def buscarContacto():
 
 def eliminarContact():
     nombre_contact = input("Ingrese el nombre del contacto que desea eliminar:\n")
-    existe = nombre_contact in contacts
-    if existe:
-        del contacts[nombre_contact]
-        print("Contacto eliminado correctamente \n")
+    existe = False 
+    contact = {}
+    nombre = ""
+    letter = ""
+    for letra in contacts:
+      for contacto in contacts[letra].keys():
+        if nombre_contact in contacto: 
+          letter = letra 
+          nombre = contacto
+          contact = contacts[letra][contacto] 
+          existe = True  
+    if existe == True:
+      del contacts[letter][nombre]
+      print(f"Contacto {nombre} se ha eliminado exitosamente", emoji.emojize(":scissors:"))
     else:
-        print("El contacto no existe, intentelo de nuevo. \n")
+      print("El contacto no existe, intentelo de nuevo. \n")
 
 def verContacts():
   lista_llaves = list(contacts.keys())
@@ -832,7 +854,7 @@ def MsgContact():
           existe = True  
     if existe == True:
       mensaje = input(f"Escriba el mensaje a {nombre_contact} al numero de telefono {contact['telefono']}\n")
-      print("Mensaje enviado EXITOSAMENTE!")
+      print("Mensaje enviado EXITOSAMENTE!", emoji.emojize(":heavy_check_mark:"))
     else:
       print("El contacto no existe, intentelo de nuevo. \n")
 
@@ -872,3 +894,4 @@ while not exit:
         mailContact()
     elif menu == 9:
         exit = True
+
