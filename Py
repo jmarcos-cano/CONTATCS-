@@ -751,6 +751,7 @@ def editarContacto():
     nombre_contact = input("Ingrese el nombre del contacto que desea editar:\n")
     existe = False 
     nombre = ""
+    letter = ""
     for letra in contacts:
       for contacto in contacts[letra].keys():
         if nombre_contact in contacto:
@@ -767,16 +768,12 @@ def editarContacto():
       edit_email = input("Ingrese el nuevo email del contacto\n")
       resultemail_edit = validators.email(edit_email)
       if resultemail_edit == True:
-        print(contacts[letra][contacto]["email"])
-        #contacts[letra][contacto]["email"] = edit_email 
-        contacts[letra][contacto].update(
+        contacts[letter][nombre].update(
           {
-            "email":edit_email
+            "email":edit_email,
+            "telefono": edit_numero
           }
-        )
-        contacts[letra][contacto]["telefono"] = edit_numero 
-        print( contacts[letra][contacto]["email"] ) 
-        print( contacts[letra][contacto]) 
+        ) 
         print("Contacto editado CORRECTAMENTE!")
     else:
         print("El contacto no existe, intentelo de nuevo. \n")
@@ -859,12 +856,20 @@ def MsgContact():
       print("El contacto no existe, intentelo de nuevo. \n")
 
 def mailContact():
-    nombre_contact = input("Ingrese el contacto al que desea enviar un mensaje de texto: ")
-    existe = nombre_contact in contacts
-    if existe:
-        mail = input(f"Ingrese el mail que desea enviar a: \n")
-        print("EMAIL ENVIADO DE FORMA EXITOSA!", emoji.emojize(":email:"))
-
+    nombre_contact = input("Ingrese el contacto al que desea enviar un correo:\n ")
+    existe = False 
+    contact = {}
+    for letra in contacts:
+      for contacto in contacts[letra].keys():
+        if nombre_contact == contacto:
+          contact = contacts[letra][contacto] 
+          existe = True  
+    if existe == True:
+      subject = input("SUBJECT DEL CORREO:")
+      mensaje = input(f"Escriba el correo que le desea enviar a {nombre_contact} a la direccion de correo electronico {contact['email']}\n")
+      print("Correo enviado EXITOSAMENTE!", emoji.emojize(":heavy_check_mark:"))
+    else:
+      print("El contacto no existe, intentelo de nuevo. \n")
 
 
 
@@ -894,4 +899,3 @@ while not exit:
         mailContact()
     elif menu == 9:
         exit = True
-
