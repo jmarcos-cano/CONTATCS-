@@ -867,7 +867,7 @@ def mailContact():
     if existe == True:
       subject = input("SUBJECT DEL CORREO:")
       mensaje = input(f"Escriba el correo que le desea enviar a {nombre_contact} a la direccion de correo electronico {contact['email']}\n")
-      print("Correo enviado EXITOSAMENTE!", emoji.emojize(":heavy_check_mark:"))
+      print("Correo enviado EXITOSAMENTE!", emoji.emojize(":e-mail:"))
     else:
       print("El contacto no existe, intentelo de nuevo. \n")
 
